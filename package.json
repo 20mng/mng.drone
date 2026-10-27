@@ -1,0 +1,8 @@
+{
+  "name": "mng-drone-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Web de MNG.DRONE: grabación aérea de bodas y eventos en Andalucía",
+  "engines": { "node": ">=18" }
+}
