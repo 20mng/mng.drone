@@ -135,3 +135,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 .contact .btn.ghost{background:transparent;color:#141414;border-color:#141414}
 .contact .btn.ghost:hover{background:#141414;color:var(--ink)}
 input[aria-invalid="true"]{border-color:#b3392f;outline:2px solid #b3392f;outline-offset:0}
+
+/* Input Boda */
+input,select{height:50px}
+select{appearance:none;background:#f6f5f1 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%23141414' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 14px center;padding-right:40px}
