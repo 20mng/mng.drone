@@ -17,6 +17,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400&display=swap">
 <link rel="stylesheet" href="/styles.css">
+<script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 
@@ -165,7 +169,7 @@
     <div>
       <p class="eyebrow">Contacto</p>
       <h2>¿Hablamos de tu evento?</h2>
-      <p style="margin-top:16px;max-width:42ch;color:#4a4843">Rellena el formulario y te respondo para personalizar los detalles. También puedes escribirme por Instagram.</p>
+      <p style="margin-top:16px;max-width:42ch;color:#4a4843">Rellena el formulario y te respondo por WhatsApp para personalizar los detalles. Si lo prefieres, escríbeme directamente por WhatsApp o por Instagram.</p>
       <div class="direct">
         <div class="line">
           <small>Instagram</small>
@@ -174,9 +178,9 @@
       </div>
     </div>
     <form id="f" novalidate>
-      <label>Nombre <span class="req">*</span><input id="nombre" name="nombre" type="text" autocomplete="name" required></label>
-      <label>Email <span class="req">*</span><input id="email" name="email" type="email" autocomplete="email" required></label>
-      <label>Teléfono (opcional)<input id="telefono" name="telefono" type="tel" autocomplete="tel"></label>
+      <label>Nombre <input id="nombre" name="nombre" type="text" autocomplete="name" required></label>
+      <label>Teléfono <input id="telefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required></label>
+      <label>Email (opcional)<input id="email" name="email" type="email" autocomplete="email"></label>
       <label>Tipo de evento
         <select id="tipo" name="tipo"><option>Boda</option><option>Celebración</option><option>Evento de empresa</option><option>Localización</option><option>Otro</option></select>
       </label>
@@ -185,6 +189,7 @@
       <label class="full">Qué te gustaría<textarea id="mensaje" name="mensaje" placeholder="Momentos que quieres grabar, número de vídeos, formato…"></textarea></label>
       <div class="hp" aria-hidden="true"><label>No rellenar<input id="web" name="web" type="text" tabindex="-1" autocomplete="off"></label></div>
       <button class="btn full" id="send" type="submit">Pedir presupuesto</button>
+      <a class="btn ghost full" id="wa" href="/api/whatsapp" target="_blank" rel="noopener">Prefiero escribir por WhatsApp</a>
       <p class="status full" id="status" role="status" hidden></p>
     </form>
   </div>

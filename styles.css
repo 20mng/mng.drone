@@ -132,3 +132,5 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 .status.err{border-color:#b3392f;background:#f8eceb}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .req{color:#b3392f}
+.contact .btn.ghost{background:transparent;color:#141414;border-color:#141414}
+.contact .btn.ghost:hover{background:#141414;color:var(--ink)}

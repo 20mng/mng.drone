@@ -1,11 +1,9 @@
-// Función serverless de Vercel: recibe el formulario y te lo manda por email con Resend.
-// Variables de entorno necesarias (Vercel → Settings → Environment Variables):
-//   RESEND_API_KEY  → clave de https://resend.com
-//   CONTACT_EMAIL   → email donde quieres recibir las solicitudes
-//   CONTACT_FROM    → (opcional) remitente verificado, p. ej. "MNG.DRONE <web@tudominio.com>"
+// Función serverless de Vercel: recibe el formulario y te avisa por WhatsApp con CallMeBot.
+// Variables de entorno (Vercel → Settings → Environment Variables):
+//   WHATSAPP_PHONE    → tu número con prefijo y sin "+", p. ej. 34600111222
+//   CALLMEBOT_APIKEY  → la clave que te manda CallMeBot por WhatsApp
 
-const esc = (s = "") =>
-  String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -13,54 +11,57 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Método no permitido." });
   }
 
-  const body = typeof req.body === "string" ? JSON.parse(req.body || "{}") : req.body || {};
+  let body = req.body || {};
+  if (typeof body === "string") {
+    try { body = JSON.parse(body || "{}"); } catch { body = {}; }
+  }
   const { nombre = "", email = "", telefono = "", tipo = "", fecha = "", lugar = "", mensaje = "", web = "" } = body;
 
   // Campo trampa: si un bot lo rellena, fingimos éxito y no enviamos nada.
   if (web) return res.status(200).json({ ok: true });
 
-  if (!nombre.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-    return res.status(400).json({ error: "Faltan el nombre o un email válido." });
-  }
-  if ([nombre, email, telefono, tipo, fecha, lugar].some((v) => String(v).length > 200) || mensaje.length > 5000) {
+  if (!String(nombre).trim()) return res.status(400).json({ error: "Falta el nombre." });
+  if (String(telefono).replace(/\D/g, "").length < 9) return res.status(400).json({ error: "Falta un teléfono válido." });
+  if (email && !EMAIL_RE.test(String(email).trim())) return res.status(400).json({ error: "El email no es válido." });
+  if ([nombre, email, telefono, tipo, fecha, lugar].some((v) => String(v).length > 200) || String(mensaje).length > 1500) {
     return res.status(400).json({ error: "El mensaje es demasiado largo." });
   }
 
-  const { RESEND_API_KEY, CONTACT_EMAIL, CONTACT_FROM } = process.env;
-  if (!RESEND_API_KEY || !CONTACT_EMAIL) {
+  const { WHATSAPP_PHONE, CALLMEBOT_APIKEY } = process.env;
+  if (!WHATSAPP_PHONE || !CALLMEBOT_APIKEY) {
     return res.status(500).json({ error: "El formulario no está configurado todavía." });
   }
 
-  const fechaTxt = fecha ? fecha.split("-").reverse().join("/") : "Sin fecha";
-  const filas = [
-    ["Nombre", nombre], ["Email", email], ["Teléfono", telefono || "—"],
-    ["Evento", tipo], ["Fecha", fechaTxt], ["Lugar", lugar || "—"]
-  ];
+  const fechaTxt = fecha ? String(fecha).split("-").reverse().join("/") : "Sin fecha";
+  const telLimpio = String(telefono).replace(/[^\d+]/g, "");
+  const telWa = telLimpio.replace(/^\+/, "").replace(/^(?=[6-9]\d{8}$)/, "34");
 
-  const html = `
-    <h2 style="font-family:Arial,sans-serif">Nueva solicitud de presupuesto</h2>
-    <table style="font-family:Arial,sans-serif;border-collapse:collapse">
-      ${filas.map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#666">${k}</td><td style="padding:4px 0"><b>${esc(v)}</b></td></tr>`).join("")}
-    </table>
-    <p style="font-family:Arial,sans-serif;white-space:pre-wrap">${esc(mensaje) || "<i>Sin mensaje</i>"}</p>`;
+  const texto = [
+    "*Nueva solicitud · MNG.DRONE*",
+    "",
+    `*Nombre:* ${nombre}`,
+    `*Teléfono:* ${telefono}`,
+    `*Email:* ${email || "—"}`,
+    `*Evento:* ${tipo}`,
+    `*Fecha:* ${fechaTxt}`,
+    `*Lugar:* ${lugar || "—"}`,
+    "",
+    mensaje ? `*Mensaje:*\n${mensaje}` : "_Sin mensaje_",
+    "",
+    `Responder: https://wa.me/${telWa}`
+  ].join("\n");
 
-  const text = filas.map(([k, v]) => `${k}: ${v}`).join("\n") + `\n\n${mensaje}`;
+  const url =
+    "https://api.callmebot.com/whatsapp.php?phone=" + encodeURIComponent(WHATSAPP_PHONE) +
+    "&text=" + encodeURIComponent(texto) +
+    "&apikey=" + encodeURIComponent(CALLMEBOT_APIKEY);
 
   try {
-    const r = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
-      body: JSON.stringify({
-        from: CONTACT_FROM || "MNG.DRONE <onboarding@resend.dev>",
-        to: [CONTACT_EMAIL],
-        reply_to: email,
-        subject: `Presupuesto: ${tipo} · ${nombre} · ${fechaTxt}`,
-        html,
-        text
-      })
-    });
-    if (!r.ok) {
-      console.error("Resend:", r.status, await r.text());
+    const r = await fetch(url);
+    const out = await r.text();
+    // CallMeBot responde 200 incluso con algunos errores; los detectamos por el texto.
+    if (!r.ok || /error|invalid|apikey is not/i.test(out)) {
+      console.error("CallMeBot:", r.status, out.slice(0, 500));
       return res.status(502).json({ error: "No se pudo enviar el mensaje." });
     }
     return res.status(200).json({ ok: true });

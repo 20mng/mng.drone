@@ -1,13 +1,14 @@
 # MNG.DRONE · web
 
 Web para clientes de MNG.DRONE (grabación aérea de bodas y eventos en Andalucía).
-HTML + CSS + JS sin dependencias, y una función serverless (`api/contact.js`) que envía el formulario por email con Resend.
+HTML + CSS + JS sin dependencias, y dos funciones serverless: `api/contact.js` te avisa por WhatsApp del formulario y `api/whatsapp.js` abre el chat contigo.
 
 ```
 index.html        página
 styles.css        estilos
 main.js           envío del formulario
-api/contact.js    función de Vercel que manda el email
+api/contact.js    aviso por WhatsApp del formulario (CallMeBot)
+api/whatsapp.js   redirección al chat de WhatsApp
 assets/           imagen del dron, imagen para redes (og.jpg) y favicon
 vercel.json       URLs limpias y caché de assets
 ```
@@ -24,18 +25,19 @@ vercel.json       URLs limpias y caché de assets
 2. En Vercel: **Add New → Project**, importa el repo. Framework preset: **Other**. No hace falta build command.
 3. Configura el formulario (abajo) y haz **Redeploy**.
 
-## Formulario por email (Resend)
+## Formulario por WhatsApp (CallMeBot)
 
-1. Crea una cuenta gratuita en https://resend.com y genera una API key.
-2. En Vercel → tu proyecto → **Settings → Environment Variables** añade:
-   - `RESEND_API_KEY` → la clave de Resend
-   - `CONTACT_EMAIL` → el email donde quieres recibir las solicitudes
-   - `CONTACT_FROM` → *(opcional)* remitente, solo cuando tengas un dominio verificado en Resend, p. ej. `MNG.DRONE <web@mngdrone.es>`
-3. Redeploy.
+Cuando un cliente envía el formulario, te llega un WhatsApp con sus datos. Tu número nunca aparece en la web.
 
-Sin dominio propio, Resend envía desde `onboarding@resend.dev` y **solo puede mandar al email con el que te registraste en Resend**. Usa ese mismo email en `CONTACT_EMAIL`.
+1. Guarda en tus contactos el número del bot de CallMeBot (lo tienes en https://www.callmebot.com/blog/free-api-whatsapp-messages/).
+2. Mándale por WhatsApp: `I allow callmebot to send me messages`
+3. Te responde con tu API key.
+4. En Vercel → **Settings → Environment Variables** añade:
+   - `WHATSAPP_PHONE` → tu número con prefijo y sin "+", p. ej. `34600111222`
+   - `CALLMEBOT_APIKEY` → la clave que te ha mandado el bot
+5. Redeploy (o haz un `git push`).
 
-Al responder al correo, la respuesta va directamente al cliente (`reply_to`).
+El botón **"Prefiero escribir por WhatsApp"** pasa por `/api/whatsapp`, que redirige a `wa.me` con tu número. Así el número no está en el código de la página (el cliente lo verá al abrir el chat contigo).
 
 ## Probar en local
 
@@ -48,4 +50,3 @@ Crea un `.env.local` con las mismas variables para probar el envío.
 ## Dominio propio
 
 Vercel → **Settings → Domains** → añade tu dominio y sigue las instrucciones DNS.
-Si cambias de dominio, actualiza también el dominio verificado en Resend y `CONTACT_FROM`.
