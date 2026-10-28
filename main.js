@@ -3,58 +3,34 @@
   if (y) y.textContent = new Date().getFullYear();
 
   var form = document.getElementById("f");
-  var btn = document.getElementById("send");
-  var wa = document.getElementById("wa");
+  var nombre = document.getElementById("nombre");
   var status = document.getElementById("status");
-
-  function show(msg, kind) {
-    status.textContent = msg;
-    status.className = "status full " + kind;
-    status.hidden = false;
-  }
 
   function val(id) { return document.getElementById(id).value.trim(); }
 
-  // Botón "Escribir por WhatsApp": lleva lo que el cliente haya rellenado como mensaje inicial.
-  function buildWa() {
-    var f = val("fecha");
-    var t = "Hola MNG.DRONE" + (val("nombre") ? ", soy " + val("nombre") : "") + ". Me gustaría pedir presupuesto.\n\nEvento: " + val("tipo");
-    if (f) t += "\nFecha: " + f.split("-").reverse().join("/");
+  function error(msg) {
+    status.textContent = msg;
+    status.className = "status full err";
+    status.hidden = false;
+    nombre.setAttribute("aria-invalid", "true");
+    nombre.focus();
+  }
+
+  nombre.addEventListener("input", function () {
+    if (nombre.value.trim()) { status.hidden = true; nombre.removeAttribute("aria-invalid"); }
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (!val("nombre")) return error("Escribe tu nombre para poder enviarme el mensaje.");
+
+    var t = "Hola MNG.DRONE, soy " + val("nombre") + ". Me gustaría información para un evento.\n\nEvento: " + val("tipo");
+    if (val("fecha")) t += "\nFecha: " + val("fecha").split("-").reverse().join("/");
     if (val("lugar")) t += "\nLugar: " + val("lugar");
     if (val("mensaje")) t += "\n\n" + val("mensaje");
-    wa.href = "/api/whatsapp?text=" + encodeURIComponent(t);
-  }
-  ["nombre", "tipo", "fecha", "lugar", "mensaje"].forEach(function (id) {
-    document.getElementById(id).addEventListener("input", buildWa);
-  });
-  buildWa();
 
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
-    var data = Object.fromEntries(new FormData(form).entries());
-
-    if (!data.nombre.trim()) return show("Escribe tu nombre para que sepa a quién responder.", "err");
-    if (data.telefono.replace(/\D/g, "").length < 9) return show("Escribe tu teléfono para que pueda contestarte por WhatsApp.", "err");
-    if (data.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) return show("Revisa el email, parece que no es válido.", "err");
-
-    btn.disabled = true;
-    btn.textContent = "Enviando…";
-    try {
-      var r = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-      var j = await r.json().catch(function () { return {}; });
-      if (!r.ok) throw new Error(j.error || "No se pudo enviar.");
-      form.reset();
-      buildWa();
-      show("Solicitud enviada. Te escribo pronto por WhatsApp con tu presupuesto.", "ok");
-    } catch (err) {
-      show(err.message + " Inténtalo de nuevo o usa el botón de WhatsApp.", "err");
-    } finally {
-      btn.disabled = false;
-      btn.textContent = "Pedir presupuesto";
-    }
+    var url = "/api/whatsapp?text=" + encodeURIComponent(t);
+    var w = window.open(url, "_blank");
+    if (w) w.opener = null; else window.location.href = url;
   });
 })();

@@ -134,3 +134,4 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 .req{color:#b3392f}
 .contact .btn.ghost{background:transparent;color:#141414;border-color:#141414}
 .contact .btn.ghost:hover{background:#141414;color:var(--ink)}
+input[aria-invalid="true"]{border-color:#b3392f;outline:2px solid #b3392f;outline-offset:0}

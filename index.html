@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#141414">
 <meta property="og:type" content="website">
 <meta property="og:title" content="MNG.DRONE · Tu evento desde otra perspectiva">
-<meta property="og:description" content="Grabación aérea de bodas y eventos en Andalucía. Pide tu presupuesto.">
+<meta property="og:description" content="Grabación aérea de bodas y eventos en Andalucía. Escríbeme por WhatsApp.">
 <meta property="og:image" content="/assets/og.jpg">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
@@ -33,7 +33,7 @@
       <li><a href="#proceso">Cómo trabajo</a></li>
       <li><a href="#tarifas">Tarifas</a></li>
     </ul>
-    <a class="navcta" href="#contacto">Pedir presupuesto</a>
+    <a class="navcta" href="#contacto">Escríbeme</a>
   </div>
 </nav>
 
@@ -169,7 +169,7 @@
     <div>
       <p class="eyebrow">Contacto</p>
       <h2>¿Hablamos de tu evento?</h2>
-      <p style="margin-top:16px;max-width:42ch;color:#4a4843">Rellena el formulario y te respondo por WhatsApp para personalizar los detalles. Si lo prefieres, escríbeme directamente por WhatsApp o por Instagram.</p>
+      <p style="margin-top:16px;max-width:42ch;color:#4a4843">Cuéntame tu evento y te contesto por WhatsApp para personalizar los detalles. También puedes escribirme por Instagram.</p>
       <div class="direct">
         <div class="line">
           <small>Instagram</small>
@@ -178,19 +178,16 @@
       </div>
     </div>
     <form id="f" novalidate>
-      <label>Nombre <input id="nombre" name="nombre" type="text" autocomplete="name" required></label>
-      <label>Teléfono <input id="telefono" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required></label>
-      <label>Email (opcional)<input id="email" name="email" type="email" autocomplete="email"></label>
+      <label>Nombre <span class="req">*</span><input id="nombre" name="nombre" type="text" autocomplete="name" required aria-describedby="status"></label>
       <label>Tipo de evento
         <select id="tipo" name="tipo"><option>Boda</option><option>Celebración</option><option>Evento de empresa</option><option>Localización</option><option>Otro</option></select>
       </label>
       <label>Fecha<input id="fecha" name="fecha" type="date"></label>
       <label>Lugar<input id="lugar" name="lugar" type="text" placeholder="Finca, ciudad…"></label>
       <label class="full">Qué te gustaría<textarea id="mensaje" name="mensaje" placeholder="Momentos que quieres grabar, número de vídeos, formato…"></textarea></label>
-      <div class="hp" aria-hidden="true"><label>No rellenar<input id="web" name="web" type="text" tabindex="-1" autocomplete="off"></label></div>
-      <button class="btn full" id="send" type="submit">Pedir presupuesto</button>
-      <a class="btn ghost full" id="wa" href="/api/whatsapp" target="_blank" rel="noopener">Prefiero escribir por WhatsApp</a>
+      <button class="btn full" id="send" type="submit">Enviar por WhatsApp</button>
       <p class="status full" id="status" role="status" hidden></p>
+      <p class="note full">Se abre WhatsApp con tu mensaje ya escrito. Solo tienes que pulsar enviar.</p>
     </form>
   </div>
 </section>

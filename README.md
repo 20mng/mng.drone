@@ -1,13 +1,12 @@
 # MNG.DRONE · web
 
 Web para clientes de MNG.DRONE (grabación aérea de bodas y eventos en Andalucía).
-HTML + CSS + JS sin dependencias, y dos funciones serverless: `api/contact.js` te avisa por WhatsApp del formulario y `api/whatsapp.js` abre el chat contigo.
+HTML + CSS + JS sin dependencias, y una función serverless (`api/whatsapp.js`) que abre el chat de WhatsApp contigo.
 
 ```
 index.html        página
 styles.css        estilos
 main.js           envío del formulario
-api/contact.js    aviso por WhatsApp del formulario (CallMeBot)
 api/whatsapp.js   redirección al chat de WhatsApp
 assets/           imagen del dron, imagen para redes (og.jpg) y favicon
 vercel.json       URLs limpias y caché de assets
@@ -25,19 +24,14 @@ vercel.json       URLs limpias y caché de assets
 2. En Vercel: **Add New → Project**, importa el repo. Framework preset: **Other**. No hace falta build command.
 3. Configura el formulario (abajo) y haz **Redeploy**.
 
-## Formulario por WhatsApp (CallMeBot)
+## Contacto por WhatsApp
 
-Cuando un cliente envía el formulario, te llega un WhatsApp con sus datos. Tu número nunca aparece en la web.
+El formulario no envía nada al servidor: al pulsar **Enviar por WhatsApp** se abre un chat contigo con los datos ya escritos. El nombre es obligatorio.
 
-1. Guarda en tus contactos el número del bot de CallMeBot (lo tienes en https://www.callmebot.com/blog/free-api-whatsapp-messages/).
-2. Mándale por WhatsApp: `I allow callmebot to send me messages`
-3. Te responde con tu API key.
-4. En Vercel → **Settings → Environment Variables** añade:
-   - `WHATSAPP_PHONE` → tu número con prefijo y sin "+", p. ej. `34600111222`
-   - `CALLMEBOT_APIKEY` → la clave que te ha mandado el bot
-5. Redeploy (o haz un `git push`).
+El enlace pasa por `api/whatsapp.js`, que redirige a `wa.me` con tu número, así el número no está en el código de la página (el cliente lo verá al abrir el chat).
 
-El botón **"Prefiero escribir por WhatsApp"** pasa por `/api/whatsapp`, que redirige a `wa.me` con tu número. Así el número no está en el código de la página (el cliente lo verá al abrir el chat contigo).
+Variable de entorno en Vercel (**Settings → Environment Variables**, entorno Production):
+- `WHATSAPP_PHONE` → tu número con prefijo y sin "+", p. ej. `34600111222`
 
 ## Probar en local
 
@@ -45,7 +39,7 @@ El botón **"Prefiero escribir por WhatsApp"** pasa por `/api/whatsapp`, que red
 npm i -g vercel
 vercel dev
 ```
-Crea un `.env.local` con las mismas variables para probar el envío.
+Crea un `.env.local` con `WHATSAPP_PHONE` para probar el botón.
 
 ## Dominio propio
 
