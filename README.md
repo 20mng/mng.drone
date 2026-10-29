@@ -7,6 +7,8 @@ HTML + CSS + JS sin dependencias, y una función serverless (`api/whatsapp.js`) 
 index.html        página
 styles.css        estilos
 main.js           formulario (abre WhatsApp con el mensaje escrito)
+fx.css            efectos y animaciones (se puede borrar sin romper nada)
+fx.js             efectos: menú móvil, altímetro, visor, apariciones al hacer scroll
 api/whatsapp.js   redirección al chat de WhatsApp
 assets/           imagen del dron, imagen para redes (og.jpg) y favicon
 vercel.json       URLs limpias y caché de assets

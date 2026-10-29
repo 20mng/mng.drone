@@ -18,6 +18,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400&display=swap">
 <link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="/fx.css">
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
@@ -35,32 +36,69 @@
       <li><a href="#tarifas">Tarifas</a></li>
     </ul>
     <a class="navcta" href="#contacto">Escríbeme</a>
+    <button class="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </div>
+  <span class="progress" aria-hidden="true"></span>
 </nav>
+
+<div class="menu" id="menu" hidden>
+  <ul>
+    <li><a href="#eventos"><i>01</i>Eventos</a></li>
+    <li><a href="#servicios"><i>02</i>Servicios</a></li>
+    <li><a href="#proceso"><i>03</i>Cómo trabajo</a></li>
+    <li><a href="#tarifas"><i>04</i>Tarifas</a></li>
+    <li><a href="#contacto"><i>05</i>Escríbeme</a></li>
+  </ul>
+  <p class="menu-foot">tu evento desde otra perspectiva</p>
+</div>
+
+<div class="alt" aria-hidden="true"><span class="alt-scale"></span><span class="alt-mark"><b>ALT</b> <em id="alt">000</em> M</span></div>
+<a class="rth" href="#" aria-label="Volver arriba"><span>RTH</span><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 12V2M2.5 6.5 7 2l4.5 4.5"/></svg></a>
 
 <header class="hero" id="inicio">
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <h1>MNG.DRONE</h1>
+        <h1 class="split" aria-label="MNG.DRONE"><span aria-hidden="true" style="--i:0">M</span><span aria-hidden="true" style="--i:1">N</span><span aria-hidden="true" style="--i:2">G</span><span aria-hidden="true" style="--i:3">.</span><span aria-hidden="true" style="--i:4">D</span><span aria-hidden="true" style="--i:5">R</span><span aria-hidden="true" style="--i:6">O</span><span aria-hidden="true" style="--i:7">N</span><span aria-hidden="true" style="--i:8">E</span></h1>
         <p class="tag">tu evento desde otra perspectiva</p>
         <p class="lede">Grabación aérea en HD y 4K para bodas, celebraciones y eventos en toda Andalucía. Planifico las tomas contigo, vuelo el día del evento y te entrego vídeos editados, listos para compartir.</p>
         <div class="hero-actions">
-          <a class="btn" href="#contacto">Cuéntame tu evento</a>
+          <a class="btn arrow" href="#contacto" data-magnetic>Cuéntame tu evento</a>
           <a class="btn ghost" href="https://www.instagram.com/mng.drone/" target="_blank" rel="noopener">Ver trabajos en Instagram</a>
         </div>
       </div>
       <figure class="viewfinder" role="img" aria-label="Dron en vuelo sobre un fondo de árboles">
+        <div class="vf-img"></div>
+        <span class="scan"></span>
         <div class="hud top"><span class="rec">REC</span><span>4K · 30 FPS</span></div>
         <span class="cross"></span>
-        <div class="hud bot"><span>PERSPECTIVAS ÚNICAS</span><span>00:02:14</span></div>
+        <div class="hud bot"><span>PERSPECTIVAS ÚNICAS</span><span id="tc">00:00:00:00</span></div>
       </figure>
     </div>
     <div class="hero-strip">
-      <span>Grabación HD / 4K</span><span>Formato vertical y horizontal</span><span>Entrega en 3–5 días laborables</span><span>Vuelos según normativa</span>
+      <div class="ticker"><div class="ticker-row"><span>Grabación HD / 4K</span><span>Formato vertical y horizontal</span><span>Entrega en 3–5 días laborables</span><span>Vuelos según normativa</span></div><div class="ticker-row" aria-hidden="true"><span>Grabación HD / 4K</span><span>Formato vertical y horizontal</span><span>Entrega en 3–5 días laborables</span><span>Vuelos según normativa</span></div></div>
     </div>
   </div>
 </header>
+
+<section class="telemetry" aria-label="Datos de vuelo">
+  <div class="wrap">
+    <div class="tele-top">
+      <span class="tele-live"><i></i>Telemetría</span>
+      <span class="tele-gps">37°46′N · 3°47′W · Jaén</span>
+    </div>
+    <div class="stats">
+      <div class="stat"><p class="num"><span data-count="120">120</span><small>m</small></p><p class="lbl">Altura máxima de vuelo</p><p class="sub">Límite legal en categoría abierta</p></div>
+      <div class="stat"><p class="num"><span data-count="4">4</span>K</p><p class="lbl">Resolución de grabación</p><p class="sub">También en HD según el uso</p></div>
+      <div class="stat"><p class="num"><span>3–5</span><small>días</small></p><p class="lbl">Plazo de entrega</p><p class="sub">Laborables, en formato digital</p></div>
+      <div class="stat"><p class="num"><span data-count="100">100</span><small>%</small></p><p class="lbl">Calidad garantizada</p><p class="sub">Cuidada de principio a fin </p></div>
+    </div>
+    <div class="compass" aria-hidden="true">
+      <div class="compass-tape"></div>
+      <span class="compass-mark"><em id="hdg">000</em>°</span>
+    </div>
+  </div>
+</section>
 
 <main>
 <section id="eventos" class="fold">
@@ -76,24 +114,27 @@
       <article class="event">
         <h3>Bodas</h3>
         <p>La llegada, la salida de la ceremonia, la finca al completo y el baile al caer la tarde. Tomas que complementan a tu fotógrafo y videógrafo.</p>
-        <p class="shot">Toma típica: cenital de los invitados al salir</p>
       </article>
       <article class="event">
         <h3>Celebraciones</h3>
         <p>Pedidas, comuniones, aniversarios y cumpleaños especiales. Un recuerdo distinto de un día con tu gente.</p>
-        <p class="shot">Toma típica: barrido lento sobre la mesa</p>
       </article>
       <article class="event">
         <h3>Eventos</h3>
         <p>Presentaciones, inauguraciones, ferias y eventos de empresa. Piezas cortas pensadas para redes y uso comercial.</p>
-        <p class="shot">Toma típica: plano de aforo y ambiente</p>
       </article>
       <article class="event">
         <h3>Lugares</h3>
         <p>Fincas, cortijos, casas rurales y espacios que quieren enseñarse tal como son, con todo su entorno.</p>
-        <p class="shot">Toma típica: aproximación en órbita</p>
       </article>
     </div>
+  </div>
+</section>
+
+<section class="statement fold" aria-label="Mi forma de trabajar">
+  <div class="wrap">
+    <p class="eyebrow">Mi forma de trabajar</p>
+    <p class="big" data-words>No vuelo por volar. Busco el plano que cuenta tu día como nadie lo ha visto: desde arriba, en movimiento y sin prisas.</p>
   </div>
 </section>
 
@@ -195,11 +236,12 @@
 
 <footer>
   <div class="wrap">
-    <span>© <span id="y">2026</span> MNG.DRONE · Grabación aérea de eventos en Andalucía</span>
+    <span>© <span id="y">2026</span> MNG.DRONE · Grabación aérea</span>
     <span class="ty">tu evento desde otra perspectiva</span>
   </div>
 </footer>
 
 <script src="/main.js" defer></script>
+<script src="/fx.js" defer></script>
 </body>
 </html>
