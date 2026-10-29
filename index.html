@@ -2,53 +2,88 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="google-site-verification" content="09LZ08bNWdqoRZrUO7XBPttx0ZsbBReDnkCtn6AvvkY" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MNG.DRONE · Grabación aérea</title>
-<meta name="description" content="Grabación aérea con dron en HD y 4K para bodas, celebraciones y eventos. Edición en vertical y horizontal y entrega en 3 a 5 días laborables.">
+<meta name="google-site-verification" content="09LZ08bNWdqoRZrUO7XBPttx0ZsbBReDnkCtn6AvvkY" />
+
+<!-- Título SEO -->
+<title>MNG Drone · Grabación aérea.</title>
+<meta name="description" content="MNG Drone: grabación aérea con dron en HD y 4K para bodas, celebraciones y eventos. Edición en vertical y horizontal y entrega en 3 a 5 días laborables.">
 <meta name="theme-color" content="#141414">
+
+<!-- Open Graph / Redes sociales -->
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="MNG Drone">
 <meta property="og:title" content="MNG.DRONE · Tu evento desde otra perspectiva">
-<meta property="og:description" content="Grabación aérea de bodas y eventos en Andalucía. Escríbeme por WhatsApp.">
+<meta property="og:description" content="Grabación aérea. Escríbeme por WhatsApp.">
 <meta property="og:image" content="https://www.mngdrone.es/assets/og-mng.jpg">
 <meta property="og:url" content="https://www.mngdrone.es/">
 <meta property="og:locale" content="es_ES">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.mngdrone.es/">
+
+<!-- Favicons -->
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/assets/icon-192.png" type="image/png" sizes="192x192">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+<!-- Tipografías y estilos -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@400&display=swap">
 <link rel="stylesheet" href="/styles.css">
 <link rel="stylesheet" href="/fx.css">
 <link rel="stylesheet" href="/theme.css">
+
+<!-- Modo claro guardado: se aplica antes de pintar para que no parpadee -->
 <script>
-  /* Aplica el modo guardado antes de pintar la página, para que no haya parpadeo */
   try { if (localStorage.getItem("theme") === "light") { document.documentElement.setAttribute("data-theme", "light"); } } catch (e) {}
 </script>
+
+<!-- Vercel Analytics -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
- <script type="application/ld+json">
-   {
-     "@context": "https://schema.org",
-     "@type": "ProfessionalService",
-     "name": "MNG.DRONE",
-     "description": "Grabación aérea con dron en HD y 4K para bodas, celebraciones y eventos en Andalucía.",
-     "url": "https://www.mngdrone.es/",
-     "image": "https://www.mngdrone.es/assets/og-mng.jpg",
-     "logo": "https://www.mngdrone.es/assets/logoWhite.png",
-     "areaServed": { "@type": "State", "name": "Andalucía" },
-     "address": { "@type": "PostalAddress", "addressLocality": "Jaén", "addressRegion": "Andalucía", "addressCountry": "ES" },
-     "priceRange": "Consultar",
-     "sameAs": ["https://www.instagram.com/mng.drone/"]
-   }
-   </script>
-   <script type="application/ld+json">
-    { "@context": "https://schema.org", "@type": "WebSite", "name": "MNG.DRONE", "url": "https://www.mngdrone.es/" }
-   </script>
+
+<!-- Datos estructurados (web + negocio) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.mngdrone.es/#website",
+      "url": "https://www.mngdrone.es/",
+      "name": "MNG Drone",
+      "alternateName": ["MNG.DRONE", "mng.drone", "MNGDrone", "mngdrone"],
+      "inLanguage": "es-ES",
+      "publisher": { "@id": "https://www.mngdrone.es/#organization" }
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.mngdrone.es/#organization",
+      "name": "MNG Drone",
+      "alternateName": ["MNG.DRONE", "mng.drone", "MNGDrone", "mngdrone"],
+      "description": "Servicio profesional de grabación aérea con dron en HD y 4K para bodas, celebraciones y eventos.",
+      "url": "https://www.mngdrone.es/",
+      "image": "https://www.mngdrone.es/assets/og-mng.jpg",
+      "logo": "https://www.mngdrone.es/assets/icon-512.png",
+      "areaServed": [
+        { "@type": "City", "name": "Jaén" },
+        { "@type": "State", "name": "Andalucía" }
+      ],
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Jaén",
+        "addressRegion": "Andalucía",
+        "addressCountry": "ES"
+      },
+      "priceRange": "€€",
+      "sameAs": ["https://www.instagram.com/mng.drone/"]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -117,7 +152,7 @@
   <div class="wrap">
     <div class="tele-top">
       <span class="tele-live"><i></i>Telemetría</span>
-      <span class="tele-gps">37°46′N · 3°47′W · Jaén</span>
+      <span class="tele-gps">37°46′N · 3°47′W</span>
     </div>
     <div class="stats">
       <div class="stat"><p class="num"><span data-count="120">120</span><small>m</small></p><p class="lbl">Altura máxima de vuelo</p><p class="sub">Límite legal en categoría abierta</p></div>
@@ -268,7 +303,7 @@
 
 <footer>
   <div class="wrap">
-    <span>© <span id="y">2026</span> MNG.DRONE · Grabación aérea</span>
+    <span>© <span id="y">2026</span> MNG DRONE · Grabación aérea</span>
     <span class="ty">tu evento desde otra perspectiva</span>
   </div>
 </footer>
