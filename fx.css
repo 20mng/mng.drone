@@ -41,6 +41,10 @@ nav ul a.active{color:var(--ink)}
   .burger{display:block}
   .navcta{display:none}
 }
+/* Sin grano de película en el móvil: fondo liso */
+@media (max-width:760px), (hover:none){
+  .grain{display:none}
+}
 .menu{position:fixed;inset:0;z-index:8;background:var(--ground);display:flex;flex-direction:column;justify-content:center;gap:32px;
   padding-block:calc(90px + env(safe-area-inset-top,0px)) calc(32px + env(safe-area-inset-bottom,0px));
   padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));
