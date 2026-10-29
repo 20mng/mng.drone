@@ -1,0 +1,84 @@
+/* ─────────────────────────────────────────────────────────────
+   MNG.DRONE · modo claro
+   Paleta de cielo: fondo blanco azulado, azul marino para el texto
+   y azul celeste para los acentos. Se activa con el botón del menú.
+   ───────────────────────────────────────────────────────────── */
+
+/* ── Botón del menú ── */
+.nav-actions{display:flex;align-items:center;gap:10px}
+.theme-toggle{width:40px;height:40px;display:grid;place-items:center;padding:0;cursor:pointer;
+  background:none;border:1px solid var(--line);color:var(--ink);transition:border-color .3s,color .3s,background .3s}
+.theme-toggle:hover{border-color:var(--ink)}
+.theme-toggle svg{grid-area:1/1;transition:transform .6s cubic-bezier(.16,1,.3,1),opacity .35s}
+.theme-toggle .i-moon{opacity:0;transform:rotate(-90deg) scale(.6)}
+:root[data-theme="light"] .theme-toggle .i-sun{opacity:0;transform:rotate(90deg) scale(.6)}
+:root[data-theme="light"] .theme-toggle .i-moon{opacity:1;transform:none}
+@media (max-width:760px){.nav-actions{gap:4px}.theme-toggle{border-color:transparent}}
+
+/* Cambio de tema: círculo que se abre desde el botón (navegadores compatibles) */
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+/* Resto de navegadores: fundido suave de colores */
+html.theme-fade,html.theme-fade *{transition:background-color .5s ease,color .5s ease,border-color .5s ease,fill .5s ease!important}
+
+/* ── Paleta clara ── */
+:root[data-theme="light"]{
+  --ground:#f4f8fc;   /* blanco cielo */
+  --panel:#e3eef8;    /* celeste muy suave */
+  --ink:#0b2545;      /* azul marino */
+  --mute:#4d6480;
+  --line:#c2d5e7;
+  --bone:#2a86c7;     /* celeste intenso para textos de acento */
+  --sky:#5ab4e5;      /* celeste para detalles */
+  color-scheme:light;
+}
+
+/* Cielo en la portada */
+:root[data-theme="light"] .hero{background:linear-gradient(180deg,#dcedfa 0%,rgba(244,248,252,0) 75%)}
+:root[data-theme="light"] .grain{opacity:.03}
+
+/* Logo blanco → azul marino */
+:root[data-theme="light"] .logo img{filter:brightness(0) saturate(100%) invert(11%) sepia(38%) saturate(2700%) hue-rotate(196deg) brightness(95%) contrast(98%)}
+
+/* La foto y su visor siguen con sus colores de cámara */
+:root[data-theme="light"] .viewfinder{--ink:#f2f0eb;box-shadow:0 24px 50px -24px rgba(11,37,69,.45)}
+
+/* Línea del menú: de celeste a marino */
+:root[data-theme="light"] .progress{background:linear-gradient(90deg,transparent,var(--sky) 30%,var(--ink))}
+
+/* Telemetría */
+:root[data-theme="light"] .telemetry{background:radial-gradient(ellipse 60% 120% at 50% 0%,#d6eafa,transparent 70%),var(--ground)}
+:root[data-theme="light"] .num{background:linear-gradient(180deg,var(--ink) 45%,var(--sky));-webkit-background-clip:text;background-clip:text}
+:root[data-theme="light"] .alt-mark{mix-blend-mode:normal}
+:root[data-theme="light"] .alt-mark::after{background:var(--sky)}
+
+/* Frase que se ilumina */
+:root[data-theme="light"] .statement .big .w{color:#cddcea}
+:root[data-theme="light"] .statement .big .w.on{color:var(--ink)}
+:root[data-theme="light"] .statement .big .w.hl.on{color:var(--bone)}
+@media (prefers-reduced-motion:reduce){:root[data-theme="light"] .statement .big .w{color:var(--ink)}:root[data-theme="light"] .statement .big .w.hl{color:var(--bone)}}
+
+/* Tarjetas */
+:root[data-theme="light"] .svc{background:#fff;box-shadow:0 1px 0 var(--line)}
+@media (hover:hover){:root[data-theme="light"] .svc:hover{background:#fff;box-shadow:0 22px 40px -22px rgba(11,37,69,.35)}}
+:root[data-theme="light"] .svc::after{--ink:var(--bone)}
+:root[data-theme="light"] .event::before{background:linear-gradient(180deg,#fff,var(--panel))}
+
+/* Botones */
+:root[data-theme="light"] .btn:hover{background:var(--bone);border-color:var(--bone);color:#fff}
+:root[data-theme="light"] .btn.ghost:hover{background:var(--ink);border-color:var(--ink);color:#fff}
+:root[data-theme="light"] .navcta:hover{background:var(--ink);color:#fff}
+
+/* Contacto: bloque azul marino con el formulario en blanco */
+:root[data-theme="light"] .contact{background:linear-gradient(160deg,#0b2545 0%,#123a66 100%);color:#f4f8fc}
+:root[data-theme="light"] .contact .eyebrow{color:#8fd0f5}
+:root[data-theme="light"] .contact-grid > div > p{color:#c3d8ec!important}
+:root[data-theme="light"] .line{border-bottom-color:rgba(143,208,245,.4)}
+:root[data-theme="light"] .line small{color:#8fb3d3}
+:root[data-theme="light"] form{border-color:transparent;box-shadow:0 30px 60px -30px rgba(0,0,0,.5)}
+:root[data-theme="light"] label{color:#4d6480}
+:root[data-theme="light"] input,:root[data-theme="light"] select,:root[data-theme="light"] textarea{color:#0b2545;background-color:#f4f8fc;border-color:#c2d5e7}
+:root[data-theme="light"] input:focus,:root[data-theme="light"] select:focus,:root[data-theme="light"] textarea:focus{border-color:#0b2545;box-shadow:inset 0 -2px 0 #2a86c7;background-color:#fff}
+:root[data-theme="light"] .contact .btn{background:#0b2545;border-color:#0b2545;color:#fff}
+:root[data-theme="light"] .contact .btn:hover{background:#2a86c7;border-color:#2a86c7}
+:root[data-theme="light"] .note{color:#4d6480}
+:root[data-theme="light"] .alt-mark b,:root[data-theme="light"] .alt-mark em{background:var(--ground);padding:2px 3px}

@@ -265,6 +265,47 @@
     counters.forEach(function (el) { cio.observe(el); });
   }
 
+  /* ── Modo claro / oscuro ── */
+  var toggle = document.querySelector(".theme-toggle");
+  var metaTheme = document.querySelector('meta[name="theme-color"]');
+  function isLight() { return doc.getAttribute("data-theme") === "light"; }
+  function syncToggle() {
+    var label = isLight() ? "Cambiar a modo oscuro" : "Cambiar a modo claro";
+    toggle.setAttribute("aria-label", label);
+    toggle.setAttribute("title", label);
+    if (metaTheme) metaTheme.setAttribute("content", isLight() ? "#f4f8fc" : "#141414");
+  }
+  function applyTheme(light) {
+    if (light) doc.setAttribute("data-theme", "light"); else doc.removeAttribute("data-theme");
+    try { localStorage.setItem("theme", light ? "light" : "dark"); } catch (e) {}
+    syncToggle();
+  }
+  if (toggle) {
+    syncToggle();
+    toggle.addEventListener("click", function () {
+      var next = !isLight();
+      if (document.startViewTransition && !reduce) {
+        // Círculo que se abre desde el botón hasta cubrir toda la pantalla
+        var r = toggle.getBoundingClientRect();
+        var x = r.left + r.width / 2, y = r.top + r.height / 2;
+        var radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+        var t = document.startViewTransition(function () { applyTheme(next); });
+        t.ready.then(function () {
+          doc.animate(
+            { clipPath: ["circle(0px at " + x + "px " + y + "px)", "circle(" + radius + "px at " + x + "px " + y + "px)"] },
+            { duration: 750, easing: "cubic-bezier(.65,0,.35,1)", pseudoElement: "::view-transition-new(root)" }
+          );
+        }).catch(function () {});
+      } else {
+        if (!reduce) {
+          doc.classList.add("theme-fade");
+          setTimeout(function () { doc.classList.remove("theme-fade"); }, 600);
+        }
+        applyTheme(next);
+      }
+    });
+  }
+
   /* ── Botón del formulario: aviso mientras se abre WhatsApp ── */
   var form = document.getElementById("f");
   var send = document.getElementById("send");

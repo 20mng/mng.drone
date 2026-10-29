@@ -8,6 +8,7 @@ index.html        página
 styles.css        estilos
 main.js           formulario (abre WhatsApp con el mensaje escrito)
 fx.css            efectos y animaciones (se puede borrar sin romper nada)
+theme.css         modo claro (paleta azul celeste y marino) y botón de tema
 fx.js             efectos: menú móvil, altímetro, visor, apariciones al hacer scroll
 api/whatsapp.js   redirección al chat de WhatsApp
 assets/           imagen del dron, imagen para redes (og.jpg) y favicon

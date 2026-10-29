@@ -245,3 +245,7 @@ body.menu-open .rth{opacity:0;pointer-events:none}
   .statement .big .w{color:var(--ink)}
   .statement .big .w.hl{color:var(--bone)}
 }
+
+/* Campo de fecha: se oculta el icono propio del navegador para que no salgan dos calendarios
+   (sigue siendo pulsable: queda transparente encima del icono dibujado) */
+input[type="date"]::-webkit-calendar-picker-indicator{opacity:0;cursor:pointer;width:24px;height:24px;margin-right:-30px}
